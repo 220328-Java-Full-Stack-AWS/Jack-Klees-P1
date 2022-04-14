@@ -27,4 +27,9 @@ public class UserService {
 	public Optional<User> getByUsername(String username) {
 		return Optional.empty();
 	}
+
+	/* As a user, I can submit a request for reimbursement
+	As a user, I can cancel a pending request for reimbursement
+	As a user, I can view my pending and completed past requests for reimbursement
+	As a user, I can edit my pending requests for reimbursement */
 }
