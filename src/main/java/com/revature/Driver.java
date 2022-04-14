@@ -9,5 +9,6 @@ public class Driver {
         boolean quit = false; //for infinite loop a waiting for user to wish to exit program
 
         System.out.println("Hello & Welcome to 'A Fake Company' " );
+        System.out.println("Testing");
     }
 }
