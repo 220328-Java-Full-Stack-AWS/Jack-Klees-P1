@@ -2,7 +2,12 @@ package com.revature.repositories;
 
 import com.revature.models.Reimbursement;
 import com.revature.models.Status;
+import com.revature.util.ConnectionFactory;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -33,4 +38,25 @@ public class ReimbursementDAO {
     public Reimbursement update(Reimbursement unprocessedReimbursement) {
     	return null;
     }
+
+    public Reimbursement create(Reimbursement newReimb) {
+        String sql = "INSERT INTO reimburstments (author,status,resolver,amount,user_id) VALUES (?,?,?,?,?)";
+        try{
+            PreparedStatement pstmt = ConnectionFactory.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, newReimb.getAuthor().getUsername());
+            pstmt.setString(2, newReimb.getStatus().toString());
+            pstmt.setString(3, newReimb.getResolver().getUsername());
+            pstmt.setDouble(4, newReimb.getAmount());
+            pstmt.setInt(5, newReimb.getAuthor().getId());
+            pstmt.executeUpdate();
+
+            ResultSet keys = pstmt.getGeneratedKeys();
+            if (keys.next()) {
+                int key = keys.getInt(1);
+                newReimb.setId(key);
+            }
+        } catch(SQLException e) {e.printStackTrace();}
+        return newReimb;
+    }
+
 }

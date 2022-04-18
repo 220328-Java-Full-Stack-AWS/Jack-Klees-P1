@@ -1,7 +1,9 @@
 package com.revature.repositories;
 
 import com.revature.models.User;
+import com.revature.util.ConnectionFactory;
 
+import java.sql.*;
 import java.util.Optional;
 
 public class UserDAO {
@@ -21,6 +23,20 @@ public class UserDAO {
      * </ul>
      */
     public User create(User userToBeRegistered) {
+        String sql = "INSERT INTO users (username,password,first_name,last_name) VALUES (?,?,?,?)";
+        try {
+            PreparedStatement pstmt = ConnectionFactory.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1,userToBeRegistered.getUsername());
+            pstmt.setString(2,userToBeRegistered.getPassword());
+            pstmt.setString(3, userToBeRegistered.getRole().name());
+            pstmt.executeUpdate();
+
+            ResultSet keys = pstmt.getGeneratedKeys();
+            if(keys.next()){
+                int key = keys.getInt(1);
+                userToBeRegistered.setId(key);
+            }
+        } catch (SQLException e) { e.printStackTrace();}
         return userToBeRegistered;
     }
 }
