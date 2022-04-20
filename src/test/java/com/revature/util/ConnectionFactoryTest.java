@@ -12,10 +12,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ConnectionFactoryTest {
 
     private static ConnectionFactory connectionFactory;
+    private static Connection conn;
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
-        connectionFactory = ConnectionFactory.getInstance();
+        conn = ConnectionFactory.getInstance();
     }
 
     @Test

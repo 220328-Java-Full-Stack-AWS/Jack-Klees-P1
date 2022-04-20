@@ -18,7 +18,6 @@ package com.revature.models;
  * @author Center of Excellence
  */
 public enum Role {
-
     EMPLOYEE {
         @Override
         public String toString() {
@@ -31,5 +30,4 @@ public enum Role {
             return "Finance Manager";
         }
     }
-
 }
