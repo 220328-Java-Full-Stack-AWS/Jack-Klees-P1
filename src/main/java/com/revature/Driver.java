@@ -17,7 +17,7 @@ public class Driver {
        myUser = myUserDAO.create(myUser);
        System.out.println("create test: " + myUser); */
 
-        User queryUser = myUserDAO.read(1);
+        User queryUser = myUserDAO.read(2);
         System.out.println("Read Test ID: "+queryUser);
 
         UUID myUuid = UUID.randomUUID();

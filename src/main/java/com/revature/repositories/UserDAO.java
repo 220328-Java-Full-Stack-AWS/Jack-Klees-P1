@@ -101,8 +101,7 @@ public class UserDAO {
     }
 
     public Role stringToRole(String roll){
-        String newstr = roll.toLowerCase();
-        if(newstr == "employee"){ return Role.EMPLOYEE; }
+        if(roll.equalsIgnoreCase("employee")){ return Role.EMPLOYEE; }
         else { return Role.FINANCE_MANAGER; }
     }
 
