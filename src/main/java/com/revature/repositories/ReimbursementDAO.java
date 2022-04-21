@@ -2,12 +2,11 @@ package com.revature.repositories;
 
 import com.revature.models.Reimbursement;
 import com.revature.models.Status;
+import com.revature.models.User;
 import com.revature.util.ConnectionFactory;
 
 import java.sql.*;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class ReimbursementDAO {
 
@@ -23,6 +22,7 @@ public class ReimbursementDAO {
      */
     public List<Reimbursement> getByStatus(Status status) {
         Reimbursement reim = new Reimbursement();
+        List<Reimbursement> myList = new ArrayList<Reimbursement>();
         UserDAO tempA = new UserDAO();
         UserDAO tempR = new UserDAO();
         try {
@@ -40,9 +40,10 @@ public class ReimbursementDAO {
                 reim.setResolver(tempR.read(rs.getString("resolver")));
                 reim.setAmount(rs.getDouble("amount"));
                 reim.setId(rs.getInt("user_id"));
+                myList.add(reim);
             }
         } catch (SQLException e) {e.printStackTrace();}
-        return Collections.emptyList();
+        return myList;
     }
 
     /**
@@ -53,7 +54,7 @@ public class ReimbursementDAO {
      * </ul>
      */
     public Reimbursement update(Reimbursement unprocessedReimbursement) {
-        String sql = "UPDATE reimburstments SET author = ?, status = ?, resolver = ?, amount = ?, user_id = ? WHERE item_id = ?";
+        String sql = "UPDATE reimbursements SET author = ?, status = ?, resolver = ?, amount = ?, user_id = ? WHERE item_id = ?";
         try {
             PreparedStatement pstmt = ConnectionFactory.getConnection().prepareStatement(sql);
             pstmt.setString(1, unprocessedReimbursement.getAuthor().getUsername());
@@ -67,11 +68,11 @@ public class ReimbursementDAO {
         return unprocessedReimbursement;
     }
     public Reimbursement create(Reimbursement newReimb) {
-        String sql = "INSERT INTO reimburstments (author,status,resolver,amount,user_id) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO reimbursements (author,status,resolver,amount,user_id) VALUES (?,?,?,?,?)";
         try{
             PreparedStatement pstmt = ConnectionFactory.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, newReimb.getAuthor().getUsername());
-            pstmt.setString(2, "Unresolved");
+            pstmt.setString(2, newReimb.getStatus().toString());
             pstmt.setString(3, " ");
             pstmt.setDouble(4, newReimb.getAmount());
             pstmt.setInt(5, newReimb.getAuthor().getId());
@@ -84,6 +85,36 @@ public class ReimbursementDAO {
             }
         } catch(SQLException e) {e.printStackTrace();}
         return newReimb;
+    }
+
+    public Reimbursement read(int id){
+        Reimbursement reimbursement = new Reimbursement();
+        UserDAO myUserDAO = new UserDAO();
+        UserDAO myResolverDAO = new UserDAO();
+
+        try {
+            String sql = "SELECT * FROM reimbursements WHERE item_id = ?";
+            Connection conn = ConnectionFactory.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1,id);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while(rs.next()) {
+                reimbursement.setId(rs.getInt("item_id"));
+                reimbursement.setAuthor(myUserDAO.read(rs.getString("author")));
+                reimbursement.setStatus(stringToStatus(rs.getString("status")));
+                reimbursement.setResolver(myResolverDAO.read(rs.getString("resolver")));
+                reimbursement.setAmount(rs.getDouble("amount"));
+            }
+        } catch (SQLException e) {e.printStackTrace();}
+        return reimbursement;
+    }
+
+    private Status stringToStatus(String status){
+        if(status.equalsIgnoreCase("Denied")){return Status.DENIED;}
+        else if(status.equalsIgnoreCase("Pending")){return Status.PENDING;}
+        else {return Status.APPROVED;}
     }
 
 }

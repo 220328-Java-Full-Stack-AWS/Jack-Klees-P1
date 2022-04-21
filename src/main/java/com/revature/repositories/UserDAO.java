@@ -86,7 +86,7 @@ public class UserDAO {
             String sql = "SELECT * FROM users WHERE username = ?";
             Connection conn = ConnectionFactory.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1,"username");
+            pstmt.setString(1,username);
 
             ResultSet rs = pstmt.executeQuery();
 
@@ -100,7 +100,7 @@ public class UserDAO {
         return user;
     }
 
-    public Role stringToRole(String roll){
+    private Role stringToRole(String roll){
         if(roll.equalsIgnoreCase("employee")){ return Role.EMPLOYEE; }
         else { return Role.FINANCE_MANAGER; }
     }
