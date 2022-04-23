@@ -14,8 +14,8 @@ import java.util.UUID;
 public class Driver {
 
     public static void main(String[] args) {
-        UserDAO myUserDAO = new UserDAO();
-        ReimbursementDAO myReimDAO = new ReimbursementDAO();
+        //UserDAO myUserDAO = new UserDAO();
+        //ReimbursementDAO myReimDAO = new ReimbursementDAO();
 
     // Created 3 Users and Read works
        /**User myUser = new User(1,"admin","password", Role.FINANCE_MANAGER);
@@ -33,13 +33,17 @@ public class Driver {
        myReim = myReimDAO.create(myReim);
        System.out.println("Create Test Reimbursements: " + myReim);*/
     // Reading for a reimbursement by ID and updating one
-       /**Reimbursement findReim = myReimDAO.read(3);
-       System.out.println(findReim);
-       findReim.setStatus(Status.APPROVED);
+       /**Reimbursement findReim = myReimDAO.read(1);
+       Reimbursement anotherReim = myReimDAO.read(2);
+       User myResolver = myUserDAO.read(2);
+       findReim.setResolver(myResolver);
+       anotherReim.setResolver(myResolver);
        findReim = myReimDAO.update(findReim);
-       System.out.println(findReim);*/
+       anotherReim = myReimDAO.update(anotherReim);
+       System.out.println(findReim);
+       System.out.println(anotherReim);*/
 
-       UUID myUuid = UUID.randomUUID();
-       ConnectionFactory.close();
+       //UUID myUuid = UUID.randomUUID();
+       //ConnectionFactory.close();
     }
 }
