@@ -1,8 +1,7 @@
-package com.revature.repositories;
+package com.revature.dao;
 
 import com.revature.models.Reimbursement;
 import com.revature.models.Status;
-import com.revature.models.User;
 import com.revature.util.ConnectionFactory;
 
 import java.sql.*;

@@ -12,12 +12,12 @@
         version="2.5">
 
     <listener>
-        <listener-class>com.revature.services.DependencyLoaderListener</listener-class>
+        <listener-class>com.revature.servlets.DependencyLoaderListener</listener-class>
     </listener>
 
     <servlet>
         <servlet-name>pingServlet</servlet-name>
-        <servlet-class>com.revature.services.PingServlet</servlet-class>
+        <servlet-class>com.revature.servlets.PingServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>pingServlet</servlet-name>
