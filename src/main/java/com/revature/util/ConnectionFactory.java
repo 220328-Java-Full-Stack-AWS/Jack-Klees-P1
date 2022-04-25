@@ -12,8 +12,7 @@ public class ConnectionFactory {
 //private static ConnectionFactory instance;
 private static Connection connection;
 
-private ConnectionFactory() {
-    //super();
+private ConnectionFactory() {//super();
 }
 /** * <p>This method follows the Singleton Design Pattern to restrict this class to only having 1 instance.</p>
  * <p>It is invoked via:</p>
@@ -39,6 +38,7 @@ public static Connection getConnection(){
                     props.getProperty("port") + "/" +
                     props.getProperty("dbname") + "?schema=" +
                     props.getProperty("schema");
+
             String username = props.getProperty("username");
             String password = props.getProperty("pass");
 
@@ -49,13 +49,15 @@ public static Connection getConnection(){
             pstmt.executeUpdate();
 
             System.out.println("Connection String: " + connectionString);
-        } catch (IOException | SQLException | ClassNotFoundException e) {e.printStackTrace();}
+        } catch (IOException | SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         return connection;
     }
 
     public static void close() {
     try {
-        connection.close();;
+        connection.close();
     } catch (SQLException e){
         e.printStackTrace();
     }

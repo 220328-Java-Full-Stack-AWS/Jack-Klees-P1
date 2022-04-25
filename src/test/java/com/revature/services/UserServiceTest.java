@@ -7,7 +7,7 @@ import static org.mockito.Mockito.*;
 
 import java.util.Optional;
 
-import com.revature.dao.UserDAO;
+import com.revature.repositories.UserDAO;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;

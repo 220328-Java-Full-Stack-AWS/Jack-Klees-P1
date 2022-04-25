@@ -1,4 +1,4 @@
-package com.revature.dao;
+package com.revature.repositories;
 
 import com.revature.models.Reimbursement;
 import com.revature.models.Status;
@@ -108,6 +108,58 @@ public class ReimbursementDAO {
             }
         } catch (SQLException e) {e.printStackTrace();}
         return reimbursement;
+    }
+
+    public Reimbursement read(String username){
+        Reimbursement reimbursement = new Reimbursement();
+        UserDAO myUserDAO = new UserDAO();
+        UserDAO myResolverDAO = new UserDAO();
+
+        try {
+            String sql = "SELECT * FROM reimbursements WHERE username = ?";
+            Connection conn = ConnectionFactory.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,username);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while(rs.next()) {
+                reimbursement.setId(rs.getInt("item_id"));
+                reimbursement.setAuthor(myUserDAO.read(rs.getString("author")));
+                reimbursement.setStatus(stringToStatus(rs.getString("status")));
+                reimbursement.setResolver(myResolverDAO.read(rs.getString("resolver")));
+                reimbursement.setAmount(rs.getDouble("amount"));
+            }
+        } catch (SQLException e) {e.printStackTrace();}
+        return reimbursement;
+    }
+
+    public Reimbursement read(Status status){
+        Reimbursement reimbursement = new Reimbursement();
+        UserDAO myUserDAO = new UserDAO();
+        UserDAO myResolverDAO = new UserDAO();
+
+        try {
+            String sql = "SELECT * FROM reimbursements WHERE status = ?";
+            Connection conn = ConnectionFactory.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,status.toString());
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while(rs.next()) {
+                reimbursement.setId(rs.getInt("item_id"));
+                reimbursement.setAuthor(myUserDAO.read(rs.getString("author")));
+                reimbursement.setStatus(stringToStatus(rs.getString("status")));
+                reimbursement.setResolver(myResolverDAO.read(rs.getString("resolver")));
+                reimbursement.setAmount(rs.getDouble("amount"));
+            }
+        } catch (SQLException e) {e.printStackTrace();}
+        return reimbursement;
+    }
+
+    public void delete(Reimbursement toBeRemoved){
+        String sql = "";
     }
 
     private Status stringToStatus(String status){

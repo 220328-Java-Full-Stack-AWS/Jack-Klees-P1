@@ -1,7 +1,10 @@
 package com.revature.services;
 
+import com.revature.models.AbstractUser;
 import com.revature.models.User;
+import com.revature.repositories.UserDAO;
 
+import java.sql.SQLException;
 import java.util.Optional;
 
 /**
@@ -28,7 +31,25 @@ public class AuthService {
      * </ul>
      */
     public User login(String username, String password) {
-        return null;
+        User myUser = new User();
+        UserDAO userDAO = new UserDAO();
+        try{
+            myUser = userDAO.read(username);
+            if(myUser.equals(new User())){
+                System.out.println("Error: Invalid Username");
+                return null;
+            }
+            else if(password != myUser.getPassword()){
+                System.out.println("Error: Invalid Password");
+                return null;
+            }
+            else{
+                return myUser;
+            }
+        } catch (NullPointerException e){
+            e.printStackTrace();
+        }
+        return myUser;
     }
 
     /**
