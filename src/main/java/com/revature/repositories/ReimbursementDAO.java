@@ -72,7 +72,7 @@ public class ReimbursementDAO {
             PreparedStatement pstmt = ConnectionFactory.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, newReimb.getAuthor().getUsername());
             pstmt.setString(2, newReimb.getStatus().toString());
-            pstmt.setString(3, " ");
+            pstmt.setString(3, null);
             pstmt.setDouble(4, newReimb.getAmount());
             pstmt.setInt(5, newReimb.getAuthor().getId());
             pstmt.executeUpdate();
@@ -110,13 +110,13 @@ public class ReimbursementDAO {
         return reimbursement;
     }
 
-    public Reimbursement read(String username){
-        Reimbursement reimbursement = new Reimbursement();
+    public List<Reimbursement> read(String username){
         UserDAO myUserDAO = new UserDAO();
         UserDAO myResolverDAO = new UserDAO();
+        List<Reimbursement> ll = new LinkedList<>();
 
         try {
-            String sql = "SELECT * FROM reimbursements WHERE username = ?";
+            String sql = "SELECT * FROM reimbursements WHERE author = ?";
             Connection conn = ConnectionFactory.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1,username);
@@ -124,20 +124,22 @@ public class ReimbursementDAO {
             ResultSet rs = pstmt.executeQuery();
 
             while(rs.next()) {
+                Reimbursement reimbursement = new Reimbursement();
                 reimbursement.setId(rs.getInt("item_id"));
                 reimbursement.setAuthor(myUserDAO.read(rs.getString("author")));
                 reimbursement.setStatus(stringToStatus(rs.getString("status")));
                 reimbursement.setResolver(myResolverDAO.read(rs.getString("resolver")));
                 reimbursement.setAmount(rs.getDouble("amount"));
+                ll.add(reimbursement);
             }
         } catch (SQLException e) {e.printStackTrace();}
-        return reimbursement;
+        return ll;
     }
 
-    public Reimbursement read(Status status){
-        Reimbursement reimbursement = new Reimbursement();
+    public List<Reimbursement> read(Status status){
         UserDAO myUserDAO = new UserDAO();
         UserDAO myResolverDAO = new UserDAO();
+        List<Reimbursement> ll = new LinkedList<>();
 
         try {
             String sql = "SELECT * FROM reimbursements WHERE status = ?";
@@ -148,14 +150,16 @@ public class ReimbursementDAO {
             ResultSet rs = pstmt.executeQuery();
 
             while(rs.next()) {
+                Reimbursement reimbursement = new Reimbursement();
                 reimbursement.setId(rs.getInt("item_id"));
                 reimbursement.setAuthor(myUserDAO.read(rs.getString("author")));
                 reimbursement.setStatus(stringToStatus(rs.getString("status")));
                 reimbursement.setResolver(myResolverDAO.read(rs.getString("resolver")));
                 reimbursement.setAmount(rs.getDouble("amount"));
+                ll.add(reimbursement);
             }
         } catch (SQLException e) {e.printStackTrace();}
-        return reimbursement;
+        return ll;
     }
 
     public void delete(Reimbursement toBeRemoved){

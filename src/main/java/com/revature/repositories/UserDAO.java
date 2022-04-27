@@ -41,7 +41,7 @@ public class UserDAO {
      *     <li>Should return a User object with an updated ID.</li>
      * </ul>
      */
-    public User create(User userToBeRegistered) {
+    /**public User create(User userToBeRegistered) {
         String sql = "INSERT INTO users (user_id,username,password,role) VALUES (?,?,?,?)";
         try {
             PreparedStatement pstmt = ConnectionFactory.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -49,6 +49,25 @@ public class UserDAO {
             pstmt.setString(2,userToBeRegistered.getUsername());
             pstmt.setString(3,userToBeRegistered.getPassword());
             pstmt.setString(4, userToBeRegistered.getRole().toString());
+            pstmt.executeUpdate();
+
+            ResultSet keys = pstmt.getGeneratedKeys();
+            if(keys.next()){
+                int key = keys.getInt(1);
+                userToBeRegistered.setId(key);
+            }
+        } catch (SQLException e) { e.printStackTrace();}
+        return userToBeRegistered;
+    }*/
+
+    public User create(User userToBeRegistered) {
+        String sql = "INSERT INTO users (username,password,role) VALUES (?,?,?)";
+        try {
+            PreparedStatement pstmt = ConnectionFactory.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            //pstmt.setInt(1,userToBeRegistered.getId());
+            pstmt.setString(1,userToBeRegistered.getUsername());
+            pstmt.setString(2,userToBeRegistered.getPassword());
+            pstmt.setString(3, userToBeRegistered.getRole().toString());
             pstmt.executeUpdate();
 
             ResultSet keys = pstmt.getGeneratedKeys();

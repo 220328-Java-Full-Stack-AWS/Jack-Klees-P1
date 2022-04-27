@@ -20,7 +20,7 @@
     console.log("authorizedUser: ", authorizedUser);//fact finding
 
     /*
-    This is a self-invoking function, also known as IIFE, imediately invoked
+    This is a self-invoking function, also known as IIFE, immediately invoked
     function expression. To build one, wrap the function declaration in ()
     then add another pair of () at the end to act as the parameter list. Effectively
     as soon as the function is defined it is called.
@@ -42,11 +42,10 @@
         */
         let paragraph = document.getElementById("pageContent");
         paragraph.innerHTML += "<h1>Welcome, "
-            + json.firstName
+            + json.username
             + "</h1><br>"
-            + json.lastName + ", " + json.firstName
-            + "<br> username: " + json.username
-            + "<br> email: " + json.email
+            + "<br> username: " + json.password
+            + "<br> role: " + json.role
     })(); //IIFE - Imediately Invoked Function Expression - self-invoking function.
 </script>
 </body>

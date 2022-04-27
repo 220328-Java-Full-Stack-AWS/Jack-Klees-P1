@@ -1,6 +1,7 @@
 package com.revature.services;
 
 import com.revature.models.AbstractUser;
+import com.revature.models.Role;
 import com.revature.models.User;
 import com.revature.repositories.UserDAO;
 
@@ -39,11 +40,13 @@ public class AuthService {
                 System.out.println("Error: Invalid Username");
                 return null;
             }
-            else if(password != myUser.getPassword()){
+            else if(!(password.equals(myUser.getPassword()))){
                 System.out.println("Error: Invalid Password");
                 return null;
             }
             else{
+                System.out.println("User was authenticated... logging in...");
+                System.out.println(myUser);
                 return myUser;
             }
         } catch (NullPointerException e){
@@ -66,7 +69,17 @@ public class AuthService {
      * After registration, the id will be a positive integer.
      */
     public User register(User userToBeRegistered) {
-        return null;
+        User checkUser = new User();
+        UserDAO userDAO = new UserDAO();
+        String username = userToBeRegistered.getUsername();
+        checkUser = userDAO.read(username);
+        if(userToBeRegistered.getUsername().equals(checkUser)){
+            return null;
+        }
+        else {
+            userToBeRegistered = userDAO.create(userToBeRegistered);
+            return userToBeRegistered;
+        }
     }
 
     /**
