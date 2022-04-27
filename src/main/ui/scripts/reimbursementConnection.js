@@ -33,6 +33,19 @@ async function getReimbursement(id) {
     return response;
 }
 
+async function getReimbursementUser(username) {
+    let response = await fetch(
+        reimbursementResourceURL,
+        {
+            method: "GET",
+            headers: {
+                reimbursementUsername: username
+            }
+        }
+    );
+    return response;
+}
+
 async function updateReimbursement(reimbursement) {
     let response = await fetch(
         reimbursementResourceURL,

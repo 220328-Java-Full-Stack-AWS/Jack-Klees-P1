@@ -1,10 +1,13 @@
 package com.revature.services;
 
 import com.revature.models.Reimbursement;
+import com.revature.models.Role;
 import com.revature.models.Status;
 import com.revature.models.User;
+import com.revature.repositories.ReimbursementDAO;
 
 import java.util.Collections;
+import java.util.EmptyStackException;
 import java.util.List;
 
 /**
@@ -41,6 +44,13 @@ public class ReimbursementService {
      * After processing, the reimbursement will have its status changed to either APPROVED or DENIED.
      */
     public Reimbursement process(Reimbursement unprocessedReimbursement, Status finalStatus, User resolver) {
+        if(resolver.getRole().equals(Role.EMPLOYEE)){
+            return null;
+        }
+        else{
+            ReimbursementDAO reimbursementDAO = new ReimbursementDAO();
+
+        }
         return null;
     }
 

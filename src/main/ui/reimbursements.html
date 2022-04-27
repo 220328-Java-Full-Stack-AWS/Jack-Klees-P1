@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to ERS</title>
+    <title>Reimbursement Status</title>
 </head>
 
 <body>
@@ -15,23 +15,13 @@
 <script src="./scripts/userConnection.js"></script>
 <script src="./scripts/reimbursementConnection.js"></script>
 <script>
-
-    //First we grab the authToken from localStorage where we left it at login/register
     let authorizedUser = localStorage.getItem("authToken");
-    console.log("authorizedUser: ", authorizedUser);//fact finding
-
-    /*
-    This is a self-invoking function, also known as IIFE, immediately invoked
-    function expression. To build one, wrap the function declaration in ()
-    then add another pair of () at the end to act as the parameter list. Effectively
-    as soon as the function is defined it is called.
-    */
-    (async function displayUser() {
+    (async function displayReimbursement() {
         /*
         Now we make an API call to get our user data. The backend checks against the registered
         users for matching username, and returns the rest of the user object.
         */
-        let response = await getUser(authorizedUser);
+        let response = await getReimbursementUser(authorizedUser);
         let json = await response.json();
         console.log("Response: ", response);//more fact finding
         console.log("Response JSON: ", json);//we should probably remove these later
@@ -41,15 +31,15 @@
         and append some HTML to it. This changes the DOM, and thus the browser renders
         the new view.
         */
+
         let paragraph = document.getElementById("pageContent");
-        paragraph.innerHTML += "<h1>Welcome, "
+        paragraph.innerHTML += "<h1> Reimbursement List for: , "
             + json.username
             + "</h1><br>"
-            + "<br> username: " + json.password
-            + "<br> role: " + json.role
-            + "<br> Click here: <a href=\"./reimbursements.html\">Reimbursements</a>"
-    })(); //IIFE - Immediately Invoked Function Expression - self-invoking function.
-</script>
-</body>
+            + json.stringify(response)
+    })();
 
+</script>
+
+</body>
 </html>
