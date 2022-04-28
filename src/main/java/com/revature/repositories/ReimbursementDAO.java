@@ -166,7 +166,7 @@ public class ReimbursementDAO {
         String sql = "";
     }
 
-    private Status stringToStatus(String status){
+    public Status stringToStatus(String status){
         if(status.equalsIgnoreCase("Denied")){return Status.DENIED;}
         else if(status.equalsIgnoreCase("Pending")){return Status.PENDING;}
         else {return Status.APPROVED;}

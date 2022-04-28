@@ -35,7 +35,7 @@
 
     <servlet>
         <servlet-name>ReimbursementServlet</servlet-name>
-        <servlet-class>com.revature.servlets.UserServlet</servlet-class>
+        <servlet-class>com.revature.servlets.ReimbursementServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ReimbursementServlet</servlet-name>

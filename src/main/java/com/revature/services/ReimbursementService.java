@@ -8,6 +8,7 @@ import com.revature.repositories.ReimbursementDAO;
 
 import java.util.Collections;
 import java.util.EmptyStackException;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -49,15 +50,25 @@ public class ReimbursementService {
         }
         else{
             ReimbursementDAO reimbursementDAO = new ReimbursementDAO();
+            unprocessedReimbursement.setStatus(finalStatus);
+            unprocessedReimbursement.setResolver(resolver);
+            unprocessedReimbursement = reimbursementDAO.update(unprocessedReimbursement);
+            return unprocessedReimbursement;
 
         }
-        return null;
     }
 
     /**
      * Should retrieve all reimbursements with the correct status.
      */
     public List<Reimbursement> getReimbursementsByStatus(Status status) {
-        return Collections.emptyList();
+        ReimbursementDAO reimbursementDAO = new ReimbursementDAO();
+        List<Reimbursement> linklist = reimbursementDAO.read(status);
+        if(linklist.isEmpty()) {
+            return Collections.emptyList();
+        }
+        else{
+            return linklist;
+        }
     }
 }
