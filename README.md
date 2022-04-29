@@ -1,8 +1,15 @@
 # Project 1 - Employee Reimbursment System (ERS)
 
+## What I got done:
+ - GET & POST methods functional within UserServlet & ReimbursementServlet
+ - From the given UI skeleton, adapted to my project specifics and was able to get REGISTER & LOGIN pages to work and persist new registered users onto database tables
+ - Through Postman, I could create reimbursements given username & amount plus default pending status and null resolver as well as get list of reimbursements by status
+ - DAO: Reimbursements can be Created, Read (by ID, Username & Status) & Updated... No Delete
+ - DAO: Users can be created, Read( by ID and Username)... No Update or Delete
+
+
 ## Executive Summary
 The Expense Reimbursement System (ERS) will manage the process of reimbursing employees for expenses incurred while on company time. All employees in the company can login and submit requests for reimbursement and view their past tickets and pending requests. Finance managers can log in and view all reimbursement requests and past history for all employees in the company. Finance managers are authorized to approve and deny requests for expense reimbursement. The reimbursement types should have the following options: LODGING, FOOD, TRAVEL
-
 
 # Tech Stack
  - Java 8
